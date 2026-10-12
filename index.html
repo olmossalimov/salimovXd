@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mening kanalim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050806;--card:#0b120e;--line:#1b2a22;--green:#10d98a;--deep:#0a7a50;--text:#e8f1ec;--mute:#7f9489}
+*{box-sizing:border-box;margin:0}
+body{background:radial-gradient(900px 500px at 80% -10%,#0d3a27 0,transparent 60%),var(--bg);color:var(--text);font:16px/1.65 Manrope,system-ui,sans-serif;min-height:100vh}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+header{padding:64px 0 40px;text-align:center}
+.logo{width:84px;height:84px;margin:0 auto 22px;border-radius:50%;display:grid;place-items:center;font:700 34px 'Playfair Display',serif;color:#04130c;background:linear-gradient(135deg,#7dffc9,var(--green) 45%,var(--deep));box-shadow:0 0 0 1px #1d4d39,0 0 50px #10d98a40}
+h1{font:700 clamp(34px,7vw,52px)/1.1 'Playfair Display',serif;letter-spacing:.3px}
+.sub{color:var(--mute);margin:14px auto 28px;max-width:440px}
+.btn{display:inline-block;border:0;cursor:pointer;font:600 15px Manrope,sans-serif;padding:12px 26px;border-radius:999px;color:#04130c;background:linear-gradient(135deg,#5cf0b0,var(--green));text-decoration:none;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px #10d98a40}
+.btn.ghost{background:none;color:var(--green);border:1px solid #1d4d39}
+.btn.sm{padding:8px 18px;font-size:14px}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.stats{display:flex;justify-content:center;gap:34px;margin-top:34px;color:var(--mute);font-size:14px}
+.stats b{display:block;color:var(--text);font:600 22px 'Playfair Display',serif}
+.sec{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:26px}
+.sec h2{font:600 24px 'Playfair Display',serif}
+.post{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:22px}
+.post.pin{border-color:#1d6b4b;box-shadow:0 0 40px #10d98a14}
+.meta{display:flex;justify-content:space-between;color:var(--mute);font-size:13px;margin-bottom:12px}
+.pinned{color:var(--green);font-weight:600}
+.post h3{font:600 22px/1.3 'Playfair Display',serif;margin-bottom:10px}
+.body{white-space:pre-wrap;word-wrap:break-word}
+.body a{color:var(--green)}
+.post img.pic{width:100%;border-radius:12px;margin-top:16px;border:1px solid var(--line)}
+.bar{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.chip{background:none;border:1px solid var(--line);color:var(--mute);border-radius:999px;padding:6px 14px;cursor:pointer;font:500 13px Manrope,sans-serif}
+.chip:hover,.chip.on{color:var(--green);border-color:#1d6b4b}
+.cm{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
+.c{padding:10px 0;border-bottom:1px dashed var(--line)}
+.c small{color:var(--mute);margin-left:8px}
+.c b{color:var(--green)}
+.empty{color:var(--mute);font-size:14px;padding:6px 0}
+input,textarea{width:100%;background:#070d0a;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:12px 14px;font:inherit;margin-top:10px}
+input:focus,textarea:focus{outline:none;border-color:var(--green)}
+.row{display:flex;gap:10px}
+.row .btn{margin-top:10px;white-space:nowrap}
+.admin{background:var(--card);border:1px solid #1d6b4b;border-radius:18px;padding:24px;margin-bottom:28px}
+.admin h2{font:600 22px 'Playfair Display',serif}
+.hide{display:none}
+footer{text-align:center;color:var(--mute);font-size:13px;padding:50px 0 60px}
+footer a{color:var(--mute);cursor:pointer;text-decoration:underline}
+@media(max-width:480px){.row{flex-direction:column}.post{padding:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo" id="logo">M</div>
+  <h1 id="title"></h1>
+  <p class="sub" id="desc"></p>
+  <a class="btn" id="join" target="_blank" rel="noopener">Telegram'da obuna bo'lish</a>
+  <div class="stats"><div><b id="nPosts">0</b>post</div><div><b id="nCom">0</b>izoh</div></div>
+</header>
+
+<section class="admin hide" id="admin">
+  <h2>Yangi post</h2>
+  <input id="pTitle" placeholder="Sarlavha (ixtiyoriy)">
+  <textarea id="pText" rows="5" placeholder="Telegram'dagi postingizni shu yerga joylang"></textarea>
+  <input type="file" id="pImg" accept="image/*">
+  <div class="bar">
+    <button class="btn sm" id="pub">Chop etish</button>
+    <button class="btn sm ghost" id="out">Chiqish</button>
+  </div>
+</section>
+
+<main>
+  <div class="sec"><h2>Postlar</h2></div>
+  <div id="feed"></div>
+</main>
+
+<footer>© <span id="yr"></span> <span id="fn"></span> · <a id="adm">Admin</a></footer>
+</div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getFirestore,collection,doc,addDoc,updateDoc,deleteDoc,onSnapshot,query,orderBy,increment} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+/* ===== SOZLAMALAR: shu yerni o'zgartiring ===== */
+const CONFIG={
+  name:"Mening kanalim",
+  desc:"Eng sara postlar, yangiliklar va foydali maslahatlar. Fikringizni izohlarda qoldiring.",
+  telegram:"https://t.me/kanal_nomi",
+  firebase:{
+    apiKey:"AIzaSyA3tOhGQqAIky0yo8hIaB8xrCP5mia8yvs",
+    authDomain:"tgweb-36499.firebaseapp.com",
+    projectId:"tgweb-36499",
+    appId:"1:255446075976:web:790454b81fca8b20d4a67d"
+  }
+};
+/* =============================================== */
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const linkify=s=>esc(s).replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>');
+const fmt=t=>new Date(t).toLocaleDateString("uz-UZ",{day:"numeric",month:"long",year:"numeric"});
+let isAdmin=false,posts=[],comments=[],db,auth;
+
+function render(){
+  $("nPosts").textContent=posts.length;
+  $("nCom").textContent=comments.length;
+  const open=new Set([...document.querySelectorAll(".cm:not(.hide)")].map(e=>e.dataset.id));
+  const drafts={};document.querySelectorAll("#feed input").forEach(i=>drafts[i.id]=i.value);
+  const act=document.activeElement&&document.activeElement.id;
+  const list=[...posts].sort((a,b)=>(!!b.pin-!!a.pin)||(b.date-a.date));
+  if(!list.length){$("feed").innerHTML='<p class="empty">Hozircha post yo\'q.</p>';return}
+  $("feed").innerHTML=list.map(p=>{
+    const cs=comments.filter(c=>c.postId===p.id);
+    return `<article class="post ${p.pin?"pin":""}">
+    <div class="meta"><span>${fmt(p.date)}</span>${p.pin?'<span class="pinned">Mahkamlangan</span>':""}</div>
+    ${p.title?`<h3>${esc(p.title)}</h3>`:""}
+    <div class="body">${linkify(p.text)}</div>
+    ${p.img?`<img class="pic" src="${p.img}" alt="">`:""}
+    <div class="bar">
+      <button class="chip" data-a="like" data-id="${p.id}">♥ ${p.likes||0}</button>
+      <button class="chip" data-a="tog" data-id="${p.id}">Izohlar (${cs.length})</button>
+      ${isAdmin?`<button class="chip" data-a="pin" data-id="${p.id}">${p.pin?"Mahkamni olish":"Mahkamlash"}</button><button class="chip" data-a="del" data-id="${p.id}">O'chirish</button>`:""}
+    </div>
+    <div class="cm ${open.has(p.id)?"":"hide"}" data-id="${p.id}">
+      ${cs.length?cs.map(c=>`<div class="c"><b>${esc(c.name)}</b><small>${fmt(c.date)}</small><div>${esc(c.text)}</div>${isAdmin?`<button class="chip" style="margin-top:6px" data-a="dc" data-id="${c.id}">O'chirish</button>`:""}</div>`).join(""):'<p class="empty">Hali izoh yo\'q. Birinchi bo\'ling.</p>'}
+      <input placeholder="Ismingiz" maxlength="30" id="n${p.id}">
+      <div class="row"><input placeholder="Izoh yozing..." maxlength="500" id="t${p.id}"><button class="btn sm" data-a="send" data-id="${p.id}">Yuborish</button></div>
+    </div>
+  </article>`}).join("");
+  for(const k in drafts){const el=$(k);if(el)el.value=drafts[k]}
+  if(act&&$(act))$(act).focus();
+}
+
+$("feed").addEventListener("click",async e=>{
+  const b=e.target.closest("button");if(!b)return;
+  const id=b.dataset.id,a=b.dataset.a,p=posts.find(x=>x.id===id);
+  try{
+    if(a==="tog"){document.querySelector(`.cm[data-id="${id}"]`).classList.toggle("hide");return}
+    if(a==="like"){
+      const k="liked"+id;let done=false;try{done=localStorage.getItem(k)}catch(x){}
+      if(done)return;try{localStorage.setItem(k,1)}catch(x){}
+      await updateDoc(doc(db,"posts",id),{likes:increment(1)});
+    }
+    if(a==="pin")await updateDoc(doc(db,"posts",id),{pin:!p.pin});
+    if(a==="del"){
+      if(!confirm("Post o'chirilsinmi?"))return;
+      await Promise.all(comments.filter(c=>c.postId===id).map(c=>deleteDoc(doc(db,"comments",c.id))));
+      await deleteDoc(doc(db,"posts",id));
+    }
+    if(a==="dc")await deleteDoc(doc(db,"comments",id));
+    if(a==="send"){
+      const t=$("t"+id).value.trim(),n=$("n"+id).value.trim()||"Mehmon";
+      if(!t){$("t"+id).focus();return}
+      $("t"+id).value="";
+      await addDoc(collection(db,"comments"),{postId:id,name:n,text:t,date:Date.now()});
+    }
+  }catch(err){alert("Xatolik: "+err.message)}
+});
+
+$("adm").onclick=async()=>{
+  if(isAdmin)return $("admin").scrollIntoView({behavior:"smooth"});
+  const em=prompt("Admin emaili:");if(!em)return;
+  const pw=prompt("Parol:");if(!pw)return;
+  try{await signInWithEmailAndPassword(auth,em.trim(),pw)}catch(x){alert("Email yoki parol noto'g'ri.")}
+};
+$("out").onclick=()=>signOut(auth);
+
+function shrink(file){
+  return new Promise(res=>{
+    const r=new FileReader();
+    r.onload=()=>{const im=new Image();im.onload=()=>{
+      const s=Math.min(1,800/im.width),c=document.createElement("canvas");
+      c.width=im.width*s;c.height=im.height*s;c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+      res(c.toDataURL("image/jpeg",.65))};im.src=r.result};
+    r.readAsDataURL(file);
+  });
+}
+$("pub").onclick=async()=>{
+  const text=$("pText").value.trim();
+  if(!text){$("pText").focus();return}
+  const f=$("pImg").files[0],img=f?await shrink(f):"";
+  if(img.length>900000){alert("Rasm juda katta. Kichikroq rasm tanlang.");return}
+  $("pub").disabled=true;
+  try{
+    await addDoc(collection(db,"posts"),{title:$("pTitle").value.trim(),text,img,date:Date.now(),pin:false,likes:0});
+    $("pTitle").value="";$("pText").value="";$("pImg").value="";
+  }catch(err){alert("Chop etilmadi: "+err.message)}
+  $("pub").disabled=false;
+};
+
+document.title=CONFIG.name;
+$("title").textContent=CONFIG.name;$("fn").textContent=CONFIG.name;
+$("desc").textContent=CONFIG.desc;$("join").href=CONFIG.telegram;
+$("logo").textContent=CONFIG.name.trim()[0].toUpperCase();
+$("yr").textContent=new Date().getFullYear();
+
+if(CONFIG.firebase.apiKey.startsWith("SIZNING")){
+  $("feed").innerHTML='<p class="empty">Firebase sozlamalari kiritilmagan. Fayl boshidagi CONFIG qismini to\'ldiring.</p>';
+}else{
+  const app=initializeApp(CONFIG.firebase);db=getFirestore(app);auth=getAuth(app);
+  onAuthStateChanged(auth,u=>{isAdmin=!!u;$("admin").classList.toggle("hide",!isAdmin);render()});
+  onSnapshot(query(collection(db,"posts"),orderBy("date","desc")),s=>{posts=s.docs.map(d=>({id:d.id,...d.data()}));render()},
+    err=>{$("feed").innerHTML='<p class="empty">Ma\'lumot yuklanmadi: '+esc(err.message)+'</p>'});
+  onSnapshot(query(collection(db,"comments"),orderBy("date","asc")),s=>{comments=s.docs.map(d=>({id:d.id,...d.data()}));render()});
+}
+</script>
+</body>
+</html>
