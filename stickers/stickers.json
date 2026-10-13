@@ -1,0 +1,38 @@
+[
+ {
+  "id": "yulduz",
+  "name": "Yulduz",
+  "group": "Premium",
+  "file": "stickers/yulduz.json"
+ },
+ {
+  "id": "olmos",
+  "name": "Olmos",
+  "group": "Premium",
+  "file": "stickers/olmos.json"
+ },
+ {
+  "id": "toj",
+  "name": "Toj",
+  "group": "Premium",
+  "file": "stickers/toj.json"
+ },
+ {
+  "id": "chaqmoq",
+  "name": "Chaqmoq",
+  "group": "Kuch",
+  "file": "stickers/chaqmoq.json"
+ },
+ {
+  "id": "olov",
+  "name": "Olov",
+  "group": "Kuch",
+  "file": "stickers/olov.json"
+ },
+ {
+  "id": "galaktika",
+  "name": "Galaktika",
+  "group": "Kosmos",
+  "file": "stickers/galaktika.json"
+ }
+]
